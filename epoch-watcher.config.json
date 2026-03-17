@@ -1,0 +1,14 @@
+{
+  "tasks": [
+    {
+      "name": "Validator SOL Balance",
+      "run": "node log-sol-balance.mjs record",
+      "cwd": "/home/user/sosh-validator"
+    },
+    {
+      "name": "Corporate SOL Balance",
+      "run": "node log-sol-balance.mjs record",
+      "cwd": "/home/user/sosh-corporate"
+    }
+  ]
+}
