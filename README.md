@@ -7,11 +7,13 @@ Solanaのエポック切り替わりを検知し、設定ファイルに定義�
 ```bash
 cp .env.example .env
 # .env を編集して RPC URL を設定
+cp epoch-watcher.config.example.json epoch-watcher.config.json
+# epoch-watcher.config.json を編集してタスクを設定
 ```
 
 ## 設定
 
-`epoch-watcher.config.json` にタスクを定義:
+`epoch-watcher.config.json`（git 管理外）にタスクを定義:
 
 ```json
 {
@@ -29,7 +31,7 @@ cp .env.example .env
 |-----------|------|
 | `name` | ログ表示用のラベル |
 | `run` | 実行するコマンド（コマンドライン形式） |
-| `cwd` | 作業ディレクトリ（省略可） |
+| `cwd` | 作業ディレクトリ（省略可）。`~` はホームに展開、相対パスは本ツールのディレクトリ基準 |
 
 引用符付きの引数も対応: `"run": "echo 'hello world'"`
 

@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import { homedir } from "node:os";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -73,7 +74,7 @@ function saveState(epoch) {
 function loadConfig() {
   const configPath = resolve(__dirname, "epoch-watcher.config.json");
   if (!existsSync(configPath)) {
-    log("Warning: epoch-watcher.config.json not found. No tasks will run.");
+    log("Warning: epoch-watcher.config.json not found (copy epoch-watcher.config.example.json). No tasks will run.");
     return { tasks: [] };
   }
   return JSON.parse(readFileSync(configPath, "utf-8"));
@@ -102,6 +103,12 @@ function parseRun(run) {
   return { command: args[0], args: args.slice(1) };
 }
 
+// Expand "~" to the home directory; relative paths resolve against this script's directory.
+function resolveCwd(cwd) {
+  if (cwd === "~" || cwd.startsWith("~/")) cwd = homedir() + cwd.slice(1);
+  return resolve(__dirname, cwd);
+}
+
 function resolveTask(task) {
   if (task.run) {
     const parsed = parseRun(task.run);
@@ -117,7 +124,7 @@ function runTask(task) {
     log(`Running: ${resolved.name} ...`);
 
     const opts = {};
-    if (resolved.cwd) opts.cwd = resolved.cwd;
+    if (resolved.cwd) opts.cwd = resolveCwd(resolved.cwd);
 
     let proc;
     try {

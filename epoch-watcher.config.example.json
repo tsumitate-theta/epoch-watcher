@@ -3,12 +3,12 @@
     {
       "name": "Validator SOL Balance",
       "run": "node log-sol-balance.mjs record",
-      "cwd": "/home/user/sosh-validator"
+      "cwd": "~/sosh-validator"
     },
     {
       "name": "Corporate SOL Balance",
       "run": "node log-sol-balance.mjs record",
-      "cwd": "/home/user/sosh-corporate"
+      "cwd": "~/sosh-corporate"
     }
   ]
 }

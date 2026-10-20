@@ -1,3 +1,4 @@
 .env
 .devcontainer
 epoch-state.json
+epoch-watcher.config.json
